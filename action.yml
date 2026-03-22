@@ -1,0 +1,61 @@
+name: 'BehaviorCI'
+description: 'AI behavioral testing layer for CI/CD — catch regressions before they reach users'
+author: 'BehaviorCI'
+
+branding:
+  icon: 'shield'
+  color: 'blue'
+
+inputs:
+  spec-file:
+    description: 'Path to your .behaviourci.yml spec file'
+    required: false
+    default: '.behaviourci.yml'
+
+  groq-api-key:
+    description: 'Groq API key for test generation and LLM-as-judge evaluation'
+    required: true
+
+  supabase-url:
+    description: 'Supabase project URL for storing results (optional but enables dashboard)'
+    required: false
+    default: ''
+
+  supabase-anon-key:
+    description: 'Supabase anon key (optional, required if supabase-url is set)'
+    required: false
+    default: ''
+
+  fail-on-regression:
+    description: 'Fail the action (block PR merge) if overall score is below threshold'
+    required: false
+    default: 'true'
+
+  threshold:
+    description: 'Minimum pass percentage to allow merge (0-100). Overrides spec file threshold.'
+    required: false
+    default: ''
+
+  openai-api-key:
+    description: 'OpenAI API key (optional — secondary provider)'
+    required: false
+    default: ''
+
+  anthropic-api-key:
+    description: 'Anthropic API key (optional — secondary provider)'
+    required: false
+    default: ''
+
+outputs:
+  score:
+    description: 'Overall behavioral test score (0-100)'
+
+  passed:
+    description: 'Whether the run passed the threshold (true/false)'
+
+  report-path:
+    description: 'Path to the generated behaviourci-report.json artifact'
+
+runs:
+  using: 'node20'
+  main: 'dist/action/index.js'

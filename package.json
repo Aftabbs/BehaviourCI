@@ -1,0 +1,60 @@
+{
+  "name": "behaviourci",
+  "version": "0.1.0",
+  "description": "AI behavioral testing layer for CI/CD pipelines — GitHub Actions + Jest, but for AI behavior.",
+  "type": "module",
+  "main": "dist/action/index.js",
+  "bin": {
+    "behaviourci": "dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/cli/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "tsc --noEmit",
+    "cli": "tsx src/cli/index.ts",
+    "start": "node dist/cli/index.js test",
+    "bci": "node dist/cli/index.js",
+    "bci:test": "node dist/cli/index.js test examples/basic.behaviourci.yml",
+    "bci:validate": "node dist/cli/index.js validate examples/basic.behaviourci.yml",
+    "bci:init": "node dist/cli/index.js init"
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0",
+    "@anthropic-ai/sdk": "^0.36.3",
+    "@supabase/supabase-js": "^2.47.10",
+    "axios": "^1.7.9",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "dotenv": "^17.3.1",
+    "groq-sdk": "^0.8.0",
+    "js-yaml": "^4.1.0",
+    "jsonpath-plus": "^10.2.0",
+    "openai": "^4.77.0",
+    "ora": "^8.1.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.10.7",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "ai",
+    "testing",
+    "ci-cd",
+    "behavioral-testing",
+    "github-actions",
+    "llm"
+  ],
+  "license": "MIT"
+}

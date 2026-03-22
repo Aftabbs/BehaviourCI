@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+dashboard/node_modules/
+
+# Build output
+dist/
+dashboard/dist/
+
+# Environment variables — NEVER commit secrets
+.env
+.env.local
+.env.*.local
+dashboard/.env
+dashboard/.env.local
+
+# Test reports generated at runtime
+behaviourci-report.json
+coverage/
+.nyc_output/
+
+# Idea/research files (not part of the product)
+AI-Product-Failures-and-Lessons.md
+AI_Opportunity_Research_2026.md
+AI_Product_Ideas_Brief.docx
+AI_Products_Research_2024_2026.md
+generate-ideas-doc.js
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# TypeScript cache
+*.tsbuildinfo

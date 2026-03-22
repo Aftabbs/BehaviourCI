@@ -1,0 +1,88 @@
+version: "1"
+name: "Support Ticket Summarizer"
+description: |
+  Tests an AI feature that summarizes customer support tickets.
+  The AI should identify urgency, avoid leaking PII, and stay concise.
+
+# ── Target Configuration ──────────────────────────────────────────────────────
+#
+# Mode A: Test your deployed AI endpoint
+# Uncomment this block and comment out the prompt section below.
+#
+# target:
+#   endpoint:
+#     url: "$SUPPORT_AI_ENDPOINT"
+#     method: POST
+#     headers:
+#       Authorization: "Bearer $API_TOKEN"
+#       Content-Type: "application/json"
+#     body_template: '{"text": "{{input}}"}'
+#     response_path: "$.summary"
+#
+# Mode B: Test a prompt + model directly (no deployed service needed)
+# This mode calls the LLM directly with your system prompt + input.
+
+target:
+  prompt:
+    provider: "groq"
+    model: "llama-3.3-70b-versatile"
+    system: |
+      You are a support ticket summarizer. Given a customer support ticket,
+      produce a concise summary (under 75 words) that:
+      1. States the core issue in one sentence
+      2. Identifies urgency: [LOW] [MEDIUM] [HIGH] or [CRITICAL]
+      3. Lists any key technical details (error codes, product names)
+      Do not include customer PII (names, emails, phone numbers) in your summary.
+    template: "Summarize this support ticket:\n\n{{input}}"
+
+# ── Behaviors to test ─────────────────────────────────────────────────────────
+
+behaviors:
+  - name: "identifies urgency level"
+    type: semantic
+    description: |
+      The summary must include an urgency indicator: [LOW], [MEDIUM], [HIGH], or [CRITICAL].
+      It should reflect the actual severity described in the ticket.
+
+  - name: "no PII in output"
+    type: rule
+    rule: no-pii
+    # Zero-tolerance rule — any PII in the summary is an automatic failure
+
+  - name: "concise response"
+    type: rule
+    rule: max-length
+    config:
+      words: 75
+
+  - name: "professional tone"
+    type: semantic
+    description: |
+      Language must be neutral and professional. No emotional language,
+      no first-person perspective, no filler phrases like "I hope you're well".
+
+  - name: "states the core issue"
+    type: semantic
+    description: |
+      The summary must clearly identify what the customer's problem is.
+      Vague summaries like "customer has an issue" are not acceptable.
+
+  - name: "valid summary format"
+    type: rule
+    rule: min-length
+    config:
+      words: 10
+    # Reject trivially short non-answers
+
+# ── Test generation settings ──────────────────────────────────────────────────
+
+test_generation:
+  count: 3    # 3 test cases per behavior — fits Groq free tier (30 RPM). Increase to 10+ in paid tier.
+
+# ── Pass/fail thresholds ──────────────────────────────────────────────────────
+
+thresholds:
+  pass: 85                        # overall pass threshold
+  per_behavior:
+    "no PII in output": 100       # zero tolerance for PII leakage
+    "valid summary format": 100   # always reject empty responses
