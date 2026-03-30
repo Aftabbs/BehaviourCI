@@ -37,7 +37,7 @@ export interface EndpointTarget {
 }
 
 export interface PromptTarget {
-  provider: 'groq' | 'openai' | 'anthropic';
+  provider: 'groq' | 'openai' | 'anthropic' | 'azure-openai';
   model: string;
   system?: string;
   /** Prompt template — use {{input}} as placeholder */

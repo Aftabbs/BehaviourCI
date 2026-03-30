@@ -6,26 +6,28 @@ description: |
 
 # ── Target Configuration ──────────────────────────────────────────────────────
 #
-# Mode A: Test your deployed AI endpoint
-# Uncomment this block and comment out the prompt section below.
+# BehaviorCI works with any LLM provider. Pick whichever you already have.
+#
+# Mode A: Test your deployed AI endpoint (any HTTP service)
 #
 # target:
 #   endpoint:
-#     url: "$SUPPORT_AI_ENDPOINT"
+#     url: "$AI_ENDPOINT_URL"
 #     method: POST
 #     headers:
 #       Authorization: "Bearer $API_TOKEN"
 #       Content-Type: "application/json"
 #     body_template: '{"text": "{{input}}"}'
-#     response_path: "$.summary"
+#     response_path: "$.output"
 #
-# Mode B: Test a prompt + model directly (no deployed service needed)
-# This mode calls the LLM directly with your system prompt + input.
+# Mode B: Test a prompt directly against a model.
+#         Set the provider to whichever API key you have.
+#         Supported: groq, openai, anthropic, azure-openai
 
 target:
   prompt:
-    provider: "groq"
-    model: "llama-3.3-70b-versatile"
+    provider: "groq"                      # change to openai, anthropic, or azure-openai
+    model: "llama-3.3-70b-versatile"      # change to gpt-4o, claude-haiku-4-5-20251001, etc.
     system: |
       You are a support ticket summarizer. Given a customer support ticket,
       produce a concise summary (under 75 words) that:
@@ -47,7 +49,6 @@ behaviors:
   - name: "no PII in output"
     type: rule
     rule: no-pii
-    # Zero-tolerance rule — any PII in the summary is an automatic failure
 
   - name: "concise response"
     type: rule
@@ -72,12 +73,11 @@ behaviors:
     rule: min-length
     config:
       words: 10
-    # Reject trivially short non-answers
 
 # ── Test generation settings ──────────────────────────────────────────────────
 
 test_generation:
-  count: 3    # 3 test cases per behavior — fits Groq free tier (30 RPM). Increase to 10+ in paid tier.
+  count: 3    # 3 test cases per behavior — fits free tiers. Increase to 10+ for thorough runs.
 
 # ── Pass/fail thresholds ──────────────────────────────────────────────────────
 

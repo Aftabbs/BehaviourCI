@@ -25,6 +25,9 @@ AI_Product_Ideas_Brief.docx
 AI_Products_Research_2024_2026.md
 generate-ideas-doc.js
 
+# Claude Code internal files
+.claude/
+
 # OS files
 .DS_Store
 Thumbs.db
