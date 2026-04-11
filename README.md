@@ -6,6 +6,14 @@
   Behavioral testing for AI features. Runs in your CI/CD pipeline, catches regressions before they ship.
 </p>
 
+<p align="center">
+  <a href="https://www.npmjs.com/package/behaviourci"><img src="https://img.shields.io/npm/v/behaviourci?color=blue&label=npm" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/behaviourci"><img src="https://img.shields.io/npm/dm/behaviourci?color=blue" alt="npm downloads" /></a>
+  <a href="https://github.com/Aftabbs/BehaviourCI/actions/workflows/ci.yml"><img src="https://github.com/Aftabbs/BehaviourCI/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License" /></a>
+  <img src="https://img.shields.io/badge/Node.js-18%2B-green" alt="Node.js 18+" />
+</p>
+
 You describe how your AI should behave. BehaviorCI generates adversarial test inputs, scores every output, and blocks the deploy if behavior drops below your threshold. Works with any LLM provider.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -23,12 +31,23 @@ BehaviorCI is that layer.
 
 ---
 
+## Try It Right Now
+
+No API key needed. Run this to see BehaviorCI in action:
+
+```bash
+npx behaviourci demo
+```
+
+---
+
 ## 2-Minute Setup
 
 **1. Install**
 
 ```bash
 npm install -g behaviourci
+# or use without installing: npx behaviourci
 ```
 
 **2. Create a spec**

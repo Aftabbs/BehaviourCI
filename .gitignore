@@ -6,6 +6,9 @@ dashboard/node_modules/
 dist/
 dashboard/dist/
 
+# ncc action bundle is committed intentionally (action-dist/ is NOT ignored)
+licenses.txt
+
 # Environment variables — NEVER commit secrets
 .env
 .env.local

@@ -286,4 +286,84 @@ program
     }
   });
 
+// ── behaviourci demo ──────────────────────────────────────────────────────────
+
+program
+  .command('demo')
+  .description('See BehaviorCI in action — no API key required')
+  .action(async () => {
+    console.log();
+    console.log(chalk.bold.blue('BehaviorCI') + chalk.dim(' — AI behavioral testing'));
+    console.log(chalk.dim('  No API key needed. This is a simulated run to show you what BehaviorCI does.'));
+    console.log(chalk.dim('─'.repeat(60)));
+    console.log(`${chalk.bold('Feature:')} Customer Support Bot`);
+    console.log(`${chalk.bold('Behaviors:')} 5`);
+    console.log();
+
+    const behaviors = [
+      { name: 'no customer data in response', type: 'rule', pass: true, score: 100, total: 3 },
+      { name: 'stays under 100 words', type: 'rule', pass: true, score: 100, total: 3 },
+      { name: 'professional tone', type: 'semantic', pass: true, score: 91, total: 3 },
+      { name: 'addresses the question', type: 'semantic', pass: false, score: 67, total: 3 },
+      { name: 'suggests next steps', type: 'semantic', pass: true, score: 85, total: 3 },
+    ];
+
+    const spinner = ora('Generating adversarial test cases with Groq...').start();
+    await sleep(1200);
+    spinner.succeed('Generated 15 test cases across 5 behaviors');
+    console.log();
+
+    for (const b of behaviors) {
+      await sleep(400);
+      const bar = buildBar(b.score);
+      const icon = b.pass ? chalk.green('  PASS') : chalk.red('  FAIL');
+      const scoreColor = b.score >= 85 ? chalk.green : b.score >= 70 ? chalk.yellow : chalk.red;
+      console.log(
+        `${icon}  ${chalk.bold(b.name.padEnd(35))} ${bar} ${scoreColor(`${b.score.toFixed(0)}%`)}   ${b.pass ? b.total : Math.floor(b.total * b.score / 100)}/${b.total}`
+      );
+
+      if (!b.pass) {
+        await sleep(200);
+        console.log(chalk.dim(`         Input:  "Can I get a refund on order #4812?"`));
+        console.log(chalk.dim(`         Output: "Thank you for reaching out to us today!"`));
+        console.log(chalk.dim(`         Reason: Score 35/100 — response does not address the refund question`));
+      }
+    }
+
+    const overall = 82.7;
+    const passed = 14;
+    const total = 15;
+
+    console.log();
+    console.log(chalk.dim('─'.repeat(60)));
+    console.log(`  ${chalk.yellow.bold('!')} ${chalk.bold('Overall')}  ${buildBar(overall)} ${chalk.yellow(`${overall.toFixed(1)}%`)}   ${passed}/${total} passed`);
+    console.log(`  Threshold: 85%`);
+    console.log();
+    console.log(chalk.yellow.bold('  ✗ FAILED') + chalk.dim(' — "addresses the question" is below threshold'));
+    console.log();
+    console.log(chalk.dim('  In a real run, this would:'));
+    console.log(chalk.dim('  • Block the PR merge on GitHub'));
+    console.log(chalk.dim('  • Post a detailed comment with failure breakdown'));
+    console.log(chalk.dim('  • Save results to your dashboard'));
+    console.log();
+    console.log(chalk.bold('  Get started in 2 minutes:'));
+    console.log(`  1. ${chalk.cyan('Set GROQ_API_KEY')}  →  free at ${chalk.underline('console.groq.com')}`);
+    console.log(`  2. ${chalk.cyan('behaviourci init')}  →  creates your .behaviourci.yml`);
+    console.log(`  3. ${chalk.cyan('behaviourci test')}  →  run for real`);
+    console.log();
+    console.log(chalk.dim(`  Full docs: https://github.com/Aftabbs/BehaviourCI`));
+    console.log();
+  });
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function buildBar(score: number, width = 20): string {
+  const filled = Math.round((score / 100) * width);
+  const empty = width - filled;
+  const color = score >= 85 ? chalk.green : score >= 70 ? chalk.yellow : chalk.red;
+  return color('█'.repeat(filled)) + chalk.dim('░'.repeat(empty));
+}
+
 program.parse();

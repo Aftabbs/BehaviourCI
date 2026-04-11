@@ -1,0 +1,26 @@
+# Source files — only ship compiled dist/
+src/
+__tests__/
+dashboard/
+action-dist/
+
+# Config files
+tsconfig.json
+vitest.config.ts
+.env*
+.gitignore
+
+# GitHub
+.github/
+
+# Dev artifacts
+*.log
+coverage/
+.nyc_output/
+*.tsbuildinfo
+
+# Research/planning docs
+CLAUDE.md
+AI-*.md
+*.docx
+generate-ideas-doc.js

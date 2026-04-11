@@ -1,25 +1,32 @@
 {
   "name": "behaviourci",
-  "version": "0.1.0",
-  "description": "AI behavioral testing layer for CI/CD pipelines — GitHub Actions + Jest, but for AI behavior.",
+  "version": "1.0.0",
+  "description": "Behavioral testing for AI features — catch regressions in CI/CD before they reach users",
   "type": "module",
   "main": "dist/action/index.js",
   "bin": {
     "behaviourci": "dist/cli/index.js"
   },
+  "files": [
+    "dist/",
+    "examples/",
+    "supabase/migrations/",
+    "action.yml",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
+    "build:action": "ncc build src/action/index.ts -o action-dist --source-map --license licenses.txt",
+    "build:all": "npm run build && npm run build:action",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run build",
     "dev": "tsx watch src/cli/index.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "tsc --noEmit",
-    "cli": "tsx src/cli/index.ts",
-    "start": "node dist/cli/index.js test",
-    "bci": "node dist/cli/index.js",
-    "bci:test": "node dist/cli/index.js test examples/basic.behaviourci.yml",
-    "bci:validate": "node dist/cli/index.js validate examples/basic.behaviourci.yml",
-    "bci:init": "node dist/cli/index.js init"
+    "cli": "tsx src/cli/index.ts"
   },
   "dependencies": {
     "@actions/core": "^1.10.1",
@@ -40,6 +47,7 @@
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.10.7",
+    "@vercel/ncc": "^0.38.4",
     "@vitest/coverage-v8": "^2.1.8",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
@@ -51,10 +59,27 @@
   "keywords": [
     "ai",
     "testing",
-    "ci-cd",
     "behavioral-testing",
+    "ci-cd",
+    "llm",
+    "regression-testing",
     "github-actions",
-    "llm"
+    "ai-testing",
+    "prompt-testing",
+    "llm-evaluation",
+    "ai-quality",
+    "ai-observability",
+    "ml-testing",
+    "ai-regression"
   ],
+  "homepage": "https://github.com/Aftabbs/BehaviourCI#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aftabbs/BehaviourCI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Aftabbs/BehaviourCI/issues"
+  },
+  "author": "Aftab",
   "license": "MIT"
 }
