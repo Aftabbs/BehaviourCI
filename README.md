@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  Behavioral testing for AI features. Runs in your CI/CD pipeline, catches regressions before they ship.
+  Behavioral testing for AI features. Runs in your CI/CD pipeline, catches regressions before they ship. 
 </p>
 
 <p align="center">
