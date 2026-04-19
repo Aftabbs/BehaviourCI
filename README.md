@@ -1,6 +1,6 @@
 <p align="center">
   <img src="BehaviorCI.jpg" alt="BehaviorCI" width="600" />
-</p>
+</p> 
 
 <p align="center">
   Behavioral testing for AI features. Runs in your CI/CD pipeline, catches regressions before they ship.   
