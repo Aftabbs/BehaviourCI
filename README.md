@@ -4,7 +4,7 @@
 
 <p align="center">  
   Behavioral testing for AI features. Runs in your CI/CD pipeline, catches regressions before they ship.      
-</p>
+</p> 
 
 <p align="center">
   <a href="https://www.npmjs.com/package/behaviourci"><img src="https://img.shields.io/npm/v/behaviourci?color=blue&label=npm" alt="npm version" /></a>
